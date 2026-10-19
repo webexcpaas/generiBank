@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeneriBank - Appointment FAQs</title>
+  <style>
+    :root {
+      --gb-navy: #0a2540;
+      --gb-navy-dark: #061729;
+      --gb-green: #00875a;
+      --gb-green-hover: #006644;
+      --gb-bg: #f4f6f8;
+      --gb-card-bg: #ffffff;
+      --gb-text: #172b4d;
+      --gb-text-muted: #5e6c84;
+      --gb-border: #dfe1e6;
+      --gb-accent-blue: #0052cc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--gb-bg);
+      color: var(--gb-text);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Header & Branding */
+    header {
+      background: var(--gb-navy);
+      color: white;
+      padding: 1.25rem 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .brand svg {
+      width: 38px;
+      height: 38px;
+    }
+
+    .brand-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: #9bb0c7;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .header-badge {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Hero Banner */
+    .hero {
+      background: linear-gradient(135deg, var(--gb-navy) 0%, #1a365d 100%);
+      color: white;
+      padding: 3.5rem 1.5rem 3rem;
+      text-align: center;
+      border-bottom: 4px solid var(--gb-green);
+    }
+
+    .hero-content {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      margin-bottom: 2rem;
+    }
+
+    /* Search Box */
+    .search-box {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 1rem 1.25rem 1rem 3rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      outline: none;
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      fill: #64748b;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1000px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Category Filter Tabs */
+    .category-tabs {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .tab-btn {
+      background: white;
+      border: 1px solid var(--gb-border);
+      padding: 0.6rem 1.25rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gb-text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--gb-navy);
+      color: var(--gb-navy);
+    }
+
+    .tab-btn.active {
+      background: var(--gb-navy);
+      color: white;
+      border-color: var(--gb-navy);
+    }
+
+    /* Accordion FAQ List */
+    .faq-group {
+      margin-bottom: 2.5rem;
+    }
+
+    .group-title {
+      font-size: 1.25rem;
+      color: var(--gb-navy);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .faq-item {
+      background: var(--gb-card-bg);
+      border: 1px solid var(--gb-border);
+      border-radius: 8px;
+      margin-bottom: 0.85rem;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      transition: box-shadow 0.2s;
+    }
+
+    .faq-item:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 1.25rem 1.5rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--gb-text);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .faq-icon {
+      width: 20px;
+      height: 20px;
+      fill: var(--gb-text-muted);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(180deg);
+      fill: var(--gb-green);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+      background: #fafbfc;
+      border-top: 1px solid transparent;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 1000px;
+      transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+      border-top-color: #f0f2f5;
+    }
+
+    .faq-answer-content {
+      padding: 1.25rem 1.5rem;
+      color: #334155;
+      font-size: 0.95rem;
+    }
+
+    .faq-answer-content ul {
+      margin-left: 1.25rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-answer-content li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* Callout Box inside Answer */
+    .info-callout {
+      background: #eef2ff;
+      border-left: 4px solid var(--gb-accent-blue);
+      padding: 0.75rem 1rem;
+      border-radius: 0 6px 6px 0;
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      color: #1e1b4b;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--gb-text-muted);
+      display: none;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--gb-navy-dark);
+      color: #94a3b8;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.85rem;
+      border-top: 1px solid #1e293b;
+      margin-top: 3rem;
+    }
+
+    footer a {
+      color: #cbd5e1;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="#" class="brand">
+        <!-- GeneriBank Shield Logo -->
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="#00875A"/>
+          <path d="M20 8L30 13V21C30 27.2 25.7 32.9 20 34C14.3 32.9 10 27.2 10 21V13L20 8Z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M16 20L19 23L24 17" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div class="brand-title">GeneriBank</div>
+          <div class="brand-subtitle">Branch Services &amp; Appointments</div>
+        </div>
+      </a>
+      <div class="header-badge">
+        <span>●</span> UK Branch Help
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Branch Appointment FAQs</h1>
+      <p>Everything you need to know about preparing for, booking, or managing your in-branch or virtual appointment with GeneriBank.</p>
+      
+      <div class="search-box">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" id="searchInput" placeholder="Search FAQs (e.g. ID requirements, mortgages, loan offers)...">
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+      <button class="tab-btn active" data-category="all">All Topics</button>
+      <button class="tab-btn" data-category="booking">Booking &amp; Managing</button>
+      <button class="tab-btn" data-category="mortgages">Mortgages &amp; Loans</button>
+      <button class="tab-btn" data-category="accounts">Accounts &amp; Cards</button>
+      <button class="tab-btn" data-category="preparation">What to Bring (ID)</button>
+    </div>
+
+    <div id="noResults" class="no-results">
+      <h3>No matching questions found</h3>
+      <p>Try refining your search terms or select a category tab above.</p>
+    </div>
+
+    <!-- FAQ List -->
+    <div id="faqContainer">
+
+      <!-- Category 1: Booking & Managing -->
+      <div class="faq-group" data-group="booking">
+        <h2 class="group-title">📅 Booking &amp; Managing Appointments</h2>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How do I book an appointment with a GeneriBank specialist?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              You can book an appointment through three convenient methods:
+              <ul>
+                <li><strong>Online &amp; Mobile Banking:</strong> Log into your GeneriBank app and navigate to <em>Support &gt; Book a Branch Visit</em>.</li>
+                <li><strong>Telephone Banking:</strong> Call our UK customer service desk on 0800 123 4567.</li>
+                <li><strong>In Branch:</strong> Speak with a host at any GeneriBank high street branch.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can I choose between an in-branch meeting and a Video Banking call?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Yes! We offer both <strong>In-Branch Meetings</strong> at your nearest location and secure <strong>Video Banking Calls</strong> from the comfort of your home. Video calls provide the exact same advice services for mortgages, loans, and personal banking.
+              <div class="info-callout">
+                <strong>Note:</strong> Video Banking calls require a smartphone, tablet, or computer with a working camera and microphone.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Category 2: Mortgages & Loans -->
+      <div class="faq-group" data-group="mortgages">
+        <h2 class="group-title">🏡 Mortgages, Borrowing &amp; Personal Loans</h2>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What happens during a First-Time Buyer Mortgage Appointment?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Our Senior Mortgage Specialists will assess your affordability, review your deposit details, explain fixed and variable rate options, and provide an official <strong>Decision in Principle (DIP)</strong>.
+              <div class="info-callout">
+                Appointments usually take between 60 to 90 minutes.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can I discuss remortgaging or borrowing additional funds?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Yes, if your existing mortgage deal is coming to an end or you wish to release equity for home improvements, you can book a <em>Remortgage Review</em>. We will compare current GeneriBank switcher rates and calculate your updated monthly repayments.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Category 3: Accounts & Cards -->
+      <div class="faq-group" data-group="accounts">
+        <h2 class="group-title">💳 Accounts, Credit Cards &amp; Financial Reviews</h2>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Do I need an appointment to open a standard Current Account?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Most individual current accounts can be opened online in under 10 minutes via our app. However, if you require a <strong>Joint Account</strong>, a <strong>Youth/Student Account</strong>, or need assistance, an in-branch appointment is recommended.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What is a GeneriBank Financial Health Check?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              A free 30-minute 1-on-1 consultation with a personal banker to review your savings goals, evaluate credit card/overdraft rates, optimize interest earnings, and ensure your account features match your current spending habits.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Category 4: What to Bring -->
+      <div class="faq-group" data-group="preparation">
+        <h2 class="group-title">📄 What Identification &amp; Documents to Bring</h2>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What Identification (ID) is accepted for in-branch appointments?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              In accordance with UK FCA anti-money laundering guidelines, please bring <strong>one valid Proof of Identity</strong> and <strong>one Proof of Address</strong>:
+              <ul>
+                <li><strong>Proof of ID:</strong> Valid UK Photocard Driving Licence, UK/EU Passport, or Biometric Residence Permit.</li>
+                <li><strong>Proof of Address:</strong> Utility bill (gas, electric, water) dated within 3 months, Council Tax bill for current year, or HMRC tax notice.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What financial documents do I need for a Mortgage or Loan appointment?</span>
+            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Please prepare the following ahead of your meeting:
+              <ul>
+                <li>Your last 3 consecutive months of payslips (or 2 years of certified SA302 accounts if self-employed).</li>
+                <li>Your last 3 months of bank statements showing regular salary income and household expenditures.</li>
+                <li>Proof of deposit funds (e.g., savings account statements).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 GeneriBank plc. Authorised by the Prudential Regulation Authority and regulated by the Financial Conduct Authority and the Prudential Regulation Authority.</p>
+    <p style="margin-top: 0.5rem;"><a href="#">Privacy Policy</a> | <a href="#">Accessibility</a> | <a href="#">Branch Finder</a></p>
+  </footer>
+
+  <script>
+    // Accordion Toggle
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        const isOpen = item.classList.contains('open');
+
+        // Close all other accordions in the same group
+        item.parentElement.querySelectorAll('.faq-item').forEach(otherItem => {
+          otherItem.classList.remove('open');
+        });
+
+        // Toggle clicked accordion
+        if (!isOpen) {
+          item.classList.add('open');
+        }
+      });
+    });
+
+    // Category Filtering
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const faqGroups = document.querySelectorAll('.faq-group');
+    const searchInput = document.getElementById('searchInput');
+    const noResults = document.getElementById('noResults');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const category = btn.getAttribute('data-category');
+        searchInput.value = ''; // Reset search on category switch
+
+        filterFAQs(category, '');
+      });
+    });
+
+    // Real-Time Search Filtering
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase().trim();
+      const activeCategory = document.querySelector('.tab-btn.active').getAttribute('data-category');
+      
+      filterFAQs(activeCategory, searchTerm);
+    });
+
+    function filterFAQs(category, searchTerm) {
+      let totalVisible = 0;
+
+      faqGroups.forEach(group => {
+        const groupCategory = group.getAttribute('data-group');
+        const matchesCategory = (category === 'all' || category === groupCategory);
+
+        let visibleInGroup = 0;
+        const items = group.querySelectorAll('.faq-item');
+
+        items.forEach(item => {
+          const questionText = item.querySelector('.faq-question span').textContent.toLowerCase();
+          const answerText = item.querySelector('.faq-answer-content').textContent.toLowerCase();
+          const matchesSearch = questionText.includes(searchTerm) || answerText.includes(searchTerm);
+
+          if (matchesCategory && matchesSearch) {
+            item.style.display = 'block';
+            visibleInGroup++;
+            totalVisible++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Hide entire group header if no items inside match
+        group.style.display = visibleInGroup > 0 ? 'block' : 'none';
+      });
+
+      noResults.style.display = totalVisible === 0 ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
